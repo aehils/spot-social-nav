@@ -1,2 +1,2 @@
 # spot-social-nav
-Boston Dynamics Spot Robot Social Navigation using
+Boston Dynamics Spot Robot Social Navigation
