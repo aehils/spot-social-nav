@@ -20,17 +20,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
     <arg name="node_name"          default="zed" />
     <arg name="camera_model"       default="zed2i" />    
-    <arg name="camera_name"        default="zed" />
+    <arg name="camera_name"        default="zed2i" />
+    <arg name="base_frame"         default="zed_base_link" />
+    
+    <!-- Static transform publisher to define the transformation between Spot's body and base_link -->
+    <node name="static_transform_publisher" pkg="tf" type="static_transform_publisher" args="0.2 0 0.3 0 0 0 body zed_base_link 100" output="screen" />
 
-    <!-- Launch zed nodelet manager -->
-    <node pkg="nodelet" type="nodelet" name="/$(arg node_name)_nodelet_manager" args="manager" output="screen">
-        <param name="nodelet_manager_name" value="/$(arg node_name)_nodelet_manager" />
-    </node>
-
-    <!-- Load ZED wrapper nodelet for the camera -->
-    <include file="$(find social_nav_perception)/launch/zed_camera_nodelet.launch">
+    <!-- Launch ZED camera driver -->
+    <include file="$(find zed_wrapper)/launch/zed2i.launch">
         <arg name="camera_name"                 value="$(arg camera_name)" />
         <arg name="node_name"                   value="$(arg node_name)" />
         <arg name="camera_model"                value="$(arg camera_model)" />
+        <arg name="base_frame"                  value="$(arg base_frame)" />
     </include>
 </launch>

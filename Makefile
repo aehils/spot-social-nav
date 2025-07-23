@@ -36,5 +36,8 @@ start:
 debug: .start_if_not_running
 	@docker exec -it jetson20noetic bash
 
+run-perception: .start_if_not_running
+	@docker exec -it jetson20noetic bash -c "source /root/catkin_ws/devel/setup.bash && roslaunch social_nav_perception perception.launch"
+
 stop:
 	@docker container stop jetson20noetic || true

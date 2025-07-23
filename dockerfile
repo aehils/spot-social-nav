@@ -51,7 +51,7 @@ WORKDIR /root/catkin_ws
 
 RUN mkdir -p /root/catkin_ws/src/ && source /opt/ros/noetic/setup.bash && catkin init && catkin build
 
-RUN cd src && git clone  --branch v4.0.5 --recurse-submodules -j8 https://github.com/stereolabs/zed-ros-wrapper.git
+RUN cd src && git clone --branch v4.0.8 --recurse-submodules -j8 https://github.com/stereolabs/zed-ros-wrapper.git
 RUN apt update && source devel/setup.bash && DEBIAN_FRONTEND=noninteractive rosdep install --from-paths src --ignore-src -r -y 
 RUN python3 -m pip install -U pip && python3 -m pip install opencv-contrib-python
 
