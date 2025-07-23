@@ -33,4 +33,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <arg name="camera_model"                value="$(arg camera_model)" />
         <arg name="base_frame"                  value="$(arg base_frame)" />
     </include>
+
+    <!-- Launch node to publish people positions in the odom frame -->
+    <node name="people_in_odom_frame" pkg="social_nav_perception" type="people_in_odom_frame.py" output="screen"/>
+    
 </launch>
