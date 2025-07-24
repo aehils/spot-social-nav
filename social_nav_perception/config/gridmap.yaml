@@ -1,0 +1,56 @@
+# gridmap.yaml —— Spot 参数参考版
+
+# 1) 相机列表（按需删减）
+cameras:
+  - {depth: "/spot/depth/frontleft/image",  info: "/spot/depth/frontleft/camera_info"}
+  - {depth: "/spot/depth/frontright/image", info: "/spot/depth/frontright/camera_info"}
+  - {depth: "/spot/depth/back/image",       info: "/spot/depth/back/camera_info"}
+  - {depth: "/spot/depth/left/image",       info: "/spot/depth/left/camera_info"}
+  - {depth: "/spot/depth/right/image",      info: "/spot/depth/right/camera_info"}
+  - {depth: "/spot/depth/hand/image",       info: "/spot/depth/hand/camera_info"}   # 不用就删
+
+# 2) 地图与发布
+grid_frame:     vision
+map_topic:      /social_nav/map
+resolution:     0.05        # 5cm 栅格，够细也不卡（Spot移动速度不快）
+size_x:         240         # 12 m 覆盖（240*0.05）
+size_y:         240
+publish_rate:   25.0        # Hz，足够跟上人/狗移动
+
+# 3) 深度预处理（Spot 深度相机典型 0.3～5m）
+stride:         2           # 每 2 像素取1个点，减负；要更细就设 1
+min_depth:      0.25        # Realsense/ToF 近端噪声较大，略放大
+max_depth:      5.0         # Spot 相机室内有效距离 ~4-6m，取 5m
+voxel_size:     0.04        # 4cm 体素，点够密了
+
+# 4) 机器人本体尺寸（过滤自身体素）
+# Spot 主体长约 1.1 m，宽 0.5 m；为了稳妥过滤用稍大盒子
+robot_length:   1.10
+robot_width:    0.55
+
+# 5) 地面分割（高度分位法）
+ground_quantile: 0.08       # 取最低 8% 高度为地面参考（相机装在背上略高）
+ground_eps:      0.12       # 阈值外扩 12cm，抹掉小台阶/地面起伏
+# 若切换阈值法备用（不用也保留字段方便切换）
+ground_thr:      0.70
+
+# 6) 点云缓存（环形 + 时间/距离衰减）
+cache_len:        10        # 保留最近 10 帧
+decay_time:       0.5       # 0.5 s 内没被刷新就清
+no_decay_distance: 3.5      # 3.5 m 内的障碍不衰减（离狗近的要保守）
+
+# 7) 人员安全圈/椭圆
+people_to_grid:          true
+moving_person_topic: /social_nav/moving_people/vision
+static_people_topic: /social_nav/static_people/vision
+
+safety_r_static:         0.65    # 静止人基本半径（比 0.6 稍大）
+safety_r_minor:          0.45    # 椭圆短轴
+safety_major_base:       0.70    # 长轴基值
+safety_major_gain:       1.4     # 长轴随速度放大，1.4 m/(m/s)
+min_speed_for_ellipse:   0.05    # 5 cm/s 以下仍按圆
+ellipse_points:          40      # 椭圆线段数，提高可视化平滑度
+
+people_marker_ns:        people_safety
+people_marker_topic:     /social_nav/people_safety/markers
+marker_alpha:            0.28    # 稍透明一点

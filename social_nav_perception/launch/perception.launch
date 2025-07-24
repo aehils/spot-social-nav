@@ -35,6 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </include>
 
     <!-- Launch node to publish people positions in the odom frame -->
-    <node name="people_in_odom_frame" pkg="social_nav_perception" type="people_in_odom_frame.py" output="screen"/>
+    <node name="people_classified" pkg="social_nav_perception" type="people_classified.py" output="screen"/>
+    <!-- <node name="people_id_label" pkg="social_nav_perception" type="people_id_markers.py" output="screen"/> -->
     
 </launch>

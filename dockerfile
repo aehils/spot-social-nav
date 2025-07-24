@@ -72,6 +72,7 @@ RUN source devel/setup.bash && \
 COPY ./social_nav_control /root/catkin_ws/src/social_nav_control
 COPY ./social_nav_perception /root/catkin_ws/src/social_nav_perception
 RUN catkin build social_nav_control social_nav_perception
+RUN pip install keyboard
 
 # Place here any additional dependencies for the Social Navigation project
 

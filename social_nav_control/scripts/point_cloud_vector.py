@@ -9,7 +9,7 @@ class RandomGoalGenerator:
     def __init__(self):
         # Initialize ROS node only if it hasn't been initialized yet
         rospy.init_node('point_cloud_vector', anonymous=True)
-        self.sub = rospy.Subscriber('/spot/depth/back/image', Image, self.callback)
+        self.sub = rospy.Subscriber( )
         self.pub = rospy.Publisher('/social_nav/global_goal', Twist, queue_size=10)
         self.rate = rospy.Rate(0.2)  # 0.2 Hz = 5 seconds interval
         

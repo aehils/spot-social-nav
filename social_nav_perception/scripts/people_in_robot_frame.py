@@ -15,7 +15,7 @@ class PeopleInOdomFrame:
         self.tf_listener = tf2_ros.TransformListener(self.tf_buffer)
 
         self.people_subscriber = rospy.Subscriber('/zed2i/zed/obj_det/objects', ObjectsStamped, self.people_callback)
-        self.odom_publisher = rospy.Publisher('/social_nav/people_in_odom_frame', PersonArray, queue_size=10)
+        self.odom_publisher = rospy.Publisher('/social_nav/people_in_robot_frame', PersonArray, queue_size=10)
 
     def people_callback(self, msg):
         person_array = PersonArray()
